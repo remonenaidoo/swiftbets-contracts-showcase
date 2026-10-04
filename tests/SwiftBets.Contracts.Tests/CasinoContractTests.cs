@@ -27,4 +27,27 @@ public sealed class CasinoContractTests
 
         Should.Throw<JsonException>(() => JsonSerializer.Deserialize<ProviderReconciliationV1>(json, ContractJson.Options));
     }
+
+    [Fact]
+    public void A_lotto_draw_round_trips_with_its_balls_and_revealed_seed()
+    {
+        var draw = new LottoDrawChangedV1(Guid.NewGuid(), "swift-rapid", LottoDrawStatus.Resulted, new DateTimeOffset(2026, 10, 4, 12, 5, 0, TimeSpan.Zero),
+            new DateTimeOffset(2026, 10, 4, 12, 4, 30, TimeSpan.Zero), [3, 9, 14, 22, 30, 35], 7, "ab12", "seed", new DateTimeOffset(2026, 10, 4, 12, 5, 1, TimeSpan.Zero));
+
+        var json = JsonSerializer.Serialize(draw, ContractJson.Options);
+
+        json.ShouldContain("\"status\":\"resulted\"");
+        var back = JsonSerializer.Deserialize<LottoDrawChangedV1>(json, ContractJson.Options)!;
+        (back with { Balls = draw.Balls }).ShouldBe(draw);
+        back.Balls.ShouldBe(draw.Balls);
+        Topics.All.ShouldContain(Topics.LottoDrawChanged);
+    }
+
+    [Fact]
+    public void A_lotto_bet_settlement_without_its_punter_is_rejected()
+    {
+        const string json = """{"betId":"9f1c3c84-1d5e-4a8e-9a39-2f3d1c0e8a11","drawId":"9f1c3c84-1d5e-4a8e-9a39-2f3d1c0e8a12","won":true,"payout":{"minorUnits":100,"currency":"ZAR"},"settledAt":"2026-10-04T12:05:00Z"}""";
+
+        Should.Throw<JsonException>(() => JsonSerializer.Deserialize<LottoBetSettledV1>(json, ContractJson.Options));
+    }
 }

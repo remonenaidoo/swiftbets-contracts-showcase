@@ -50,6 +50,12 @@ public static class Topics
     public const string CasinoTransaction = "casino.transaction.v1";
     public const string ProviderReconciliation = "casino.provider-reconciliation.v1";
 
+    /// <summary>Keyed by draw id: a lotto draw opened, closed, resulted or settled.</summary>
+    public const string LottoDrawChanged = "casino.lotto-draw-changed.v1";
+
+    /// <summary>Keyed by bet id: one lotto bet won or lost.</summary>
+    public const string LottoBetSettled = "casino.lotto-bet-settled.v1";
+
     /// <summary>Compacted, keyed by setting key: the latest record per key is the value in force.</summary>
     public const string ConfigEntries = "config.entries.v1";
 
@@ -68,5 +74,6 @@ public static class Topics
         SessionRevoked, AuditRecorded, NotificationRequested, LimitChanged, RestrictionsChanged, SelfExclusionStarted,
         KycStatusChanged, DepositSucceeded, DepositFailed, WithdrawalRequested, WithdrawalDecided, WithdrawalPaid,
         WithdrawalFailed, PaymentDriftDetected, ConfigEntries, CouponPlacedV2, CouponSettledV2, ManualResult, ManualResultRejected, MarketStatusChanged, CasinoTransaction, ProviderReconciliation, ExposureLimits, LimitReached, InboxMessage, ContentChanged,
+        LottoDrawChanged, LottoBetSettled,
     ];
 }

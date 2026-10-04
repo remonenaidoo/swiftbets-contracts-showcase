@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "LottoBetSettledV1",
+  "type": "object",
+  "description": "One lotto bet settled through the wallet; only its owner hears about it.",
+  "additionalProperties": false,
+  "required": [
+    "betId",
+    "drawId",
+    "punterId",
+    "won",
+    "payout",
+    "settledAt"
+  ],
+  "properties": {
+    "betId": {
+      "type": "string",
+      "format": "guid"
+    },
+    "drawId": {
+      "type": "string",
+      "format": "guid"
+    },
+    "punterId": {
+      "type": "string",
+      "format": "guid"
+    },
+    "won": {
+      "type": "boolean"
+    },
+    "payout": {
+      "$ref": "#/definitions/Money"
+    },
+    "settledAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "definitions": {
+    "Money": {
+      "type": "object",
+      "description": "An amount in minor units (cents) of an ISO 4217 currency.",
+      "additionalProperties": false,
+      "required": [
+        "minorUnits",
+        "currency"
+      ],
+      "properties": {
+        "minorUnits": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "currency": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

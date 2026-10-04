@@ -1,0 +1,88 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "LottoDrawChangedV1",
+  "type": "object",
+  "description": "A lotto draw changed status. SeedHash is the SHA-256 of the house seed, published before the draw;\nSeed is revealed with the result so anyone can recompute the balls. Provider draws carry no seed.",
+  "additionalProperties": false,
+  "required": [
+    "drawId",
+    "drawTypeId",
+    "status",
+    "drawAt",
+    "closesAt",
+    "occurredAt"
+  ],
+  "properties": {
+    "drawId": {
+      "type": "string",
+      "format": "guid"
+    },
+    "drawTypeId": {
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/definitions/LottoDrawStatus"
+    },
+    "drawAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "closesAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "balls": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "integer",
+        "format": "int32"
+      }
+    },
+    "bonusBall": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "format": "int32"
+    },
+    "seedHash": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "seed": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "occurredAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "definitions": {
+    "LottoDrawStatus": {
+      "type": "string",
+      "description": "Where a lotto draw is in its life: open for bets, closed, resulted, settled, or void.",
+      "x-enumNames": [
+        "Open",
+        "Closed",
+        "Resulted",
+        "Settled",
+        "Void"
+      ],
+      "enum": [
+        "open",
+        "closed",
+        "resulted",
+        "settled",
+        "void"
+      ]
+    }
+  }
+}

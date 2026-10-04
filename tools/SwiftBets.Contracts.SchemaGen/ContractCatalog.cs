@@ -41,6 +41,8 @@ public static class ContractCatalog
         ($"{SelfExclusionStartedV1.EventType}.v{SelfExclusionStartedV1.EventVersion}", typeof(SelfExclusionStartedV1)),
         ($"{KycStatusChangedV1.EventType}.v{KycStatusChangedV1.EventVersion}", typeof(KycStatusChangedV1)),
         ($"{CasinoTransactionV1.EventType}.v{CasinoTransactionV1.EventVersion}", typeof(CasinoTransactionV1)),
+        ($"{LottoDrawChangedV1.EventType}.v{LottoDrawChangedV1.EventVersion}", typeof(LottoDrawChangedV1)),
+        ($"{LottoBetSettledV1.EventType}.v{LottoBetSettledV1.EventVersion}", typeof(LottoBetSettledV1)),
         ($"{LiabilityChangedV1.EventType}.v{LiabilityChangedV1.EventVersion}", typeof(LiabilityChangedV1)),
         ($"{RiskAlertV1.EventType}.v{RiskAlertV1.EventVersion}", typeof(RiskAlertV1)),
         ($"{ExposureLimitV1.EventType}.v{ExposureLimitV1.EventVersion}", typeof(ExposureLimitV1)),

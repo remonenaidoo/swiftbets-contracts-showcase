@@ -299,6 +299,33 @@ export interface CasinoTransactionV1 {
 /** What a casino transaction did to the player's money. */
 export type CasinoTransactionKind = "bet" | "win" | "rollback" | "freeSpinBet" | "transferIn" | "transferOut";
 
+/** A lotto draw changed status. SeedHash is the SHA-256 of the house seed, published before the draw; Seed is revealed with the result so anyone can recompute the balls. Provider draws carry no seed. */
+export interface LottoDrawChangedV1 {
+    drawId: string;
+    drawTypeId: string;
+    status: LottoDrawStatus;
+    drawAt: string;
+    closesAt: string;
+    balls: number[] | null;
+    bonusBall: number | null;
+    seedHash: string | null;
+    seed: string | null;
+    occurredAt: string;
+}
+
+/** Where a lotto draw is in its life: open for bets, closed, resulted, settled, or void. */
+export type LottoDrawStatus = "open" | "closed" | "resulted" | "settled" | "void";
+
+/** One lotto bet settled through the wallet; only its owner hears about it. */
+export interface LottoBetSettledV1 {
+    betId: string;
+    drawId: string;
+    punterId: string;
+    won: boolean;
+    payout: Money;
+    settledAt: string;
+}
+
 /** One fixture's open liability after a coupon was placed or settled, keyed by fixture id. Version rises with every change, so a consumer keeps the highest it has seen; WorstCase is the largest liability over the outcomes. */
 export interface LiabilityChangedV1 {
     fixtureId: string;
