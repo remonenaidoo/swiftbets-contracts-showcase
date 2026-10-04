@@ -1,6 +1,6 @@
 {
   "name": "@swiftbets/contracts",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "SwiftBets event and API contracts (TypeScript types).",
   "author": "Remone Naidoo <naidoo.remone@gmail.com>",
   "license": "MIT",

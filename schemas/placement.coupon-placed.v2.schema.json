@@ -66,7 +66,7 @@
     },
     "CouponLegV2": {
       "type": "object",
-      "description": "A leg of a V2 coupon. A banker is in every line of every bet on the coupon.",
+      "description": "A leg of a V2 coupon. A banker is in every line of every bet on the coupon. A bet builder leg has market id\nMarketId, its components in Builder, and settles as one leg.",
       "additionalProperties": false,
       "required": [
         "legId",
@@ -101,12 +101,73 @@
         },
         "isBanker": {
           "type": "boolean"
+        },
+        "builder": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/BetBuilderLegV1"
+            }
+          ]
+        }
+      }
+    },
+    "BetBuilderLegV1": {
+      "type": "object",
+      "description": "The pricing inputs a bet builder leg was accepted on: its components, the correlation factor of every pair (keyed by\nPairKey) and the margin. Settlement reprices from these when a component is void.",
+      "additionalProperties": false,
+      "required": [
+        "components",
+        "pairFactors",
+        "marginPercent"
+      ],
+      "properties": {
+        "components": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BuilderComponentV1"
+          }
+        },
+        "pairFactors": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number",
+            "format": "decimal"
+          }
+        },
+        "marginPercent": {
+          "type": "number",
+          "format": "decimal"
+        }
+      }
+    },
+    "BuilderComponentV1": {
+      "type": "object",
+      "description": "One selection inside a bet builder, at the price it had on its own when the builder was priced.",
+      "additionalProperties": false,
+      "required": [
+        "marketId",
+        "selectionId",
+        "odds"
+      ],
+      "properties": {
+        "marketId": {
+          "type": "string"
+        },
+        "selectionId": {
+          "type": "string"
+        },
+        "odds": {
+          "type": "number",
+          "format": "decimal"
         }
       }
     },
     "CouponBetV2": {
       "type": "object",
-      "description": "One bet on a coupon: every combination of each size in Folds taken from the non-banker legs, with the\nbankers added to each. A Trixie on three selections is folds [2, 3]; singles are [1]; an accumulator of n is [n].\nStake is UnitStake times Lines.",
+      "description": "One bet on a coupon: every combination of each size in Folds taken from the non-banker legs, with the\nbankers added to each. A Trixie on three selections is folds [2, 3]; singles are [1]; an accumulator of n is [n].\nStake is UnitStake times Lines. AccaBoostPercent is the share of\nthe winnings settlement adds when the bet wins, fixed at placement (see AccaBoost).",
       "additionalProperties": false,
       "required": [
         "betId",
@@ -115,7 +176,8 @@
         "lines",
         "unitStake",
         "stake",
-        "potentialPayout"
+        "potentialPayout",
+        "accaBoostPercent"
       ],
       "properties": {
         "betId": {
@@ -144,6 +206,10 @@
         },
         "potentialPayout": {
           "$ref": "#/definitions/Money"
+        },
+        "accaBoostPercent": {
+          "type": "number",
+          "format": "decimal"
         }
       }
     }

@@ -2,7 +2,10 @@ using SwiftBets.Contracts.Messaging;
 
 namespace SwiftBets.Contracts.Placement;
 
-/// <summary>A leg of a V2 coupon. A banker is in every line of every bet on the coupon.</summary>
+/// <summary>
+/// A leg of a V2 coupon. A banker is in every line of every bet on the coupon. A bet builder leg has market id
+/// <see cref="Offer.BetBuilderPricing.MarketId"/>, its components in <see cref="Builder"/>, and settles as one leg.
+/// </summary>
 public sealed record CouponLegV2(
     Guid LegId,
     string FixtureId,
@@ -10,12 +13,14 @@ public sealed record CouponLegV2(
     string SelectionId,
     decimal Odds,
     long OfferVersion,
-    bool IsBanker);
+    bool IsBanker,
+    Offer.BetBuilderLegV1? Builder = null);
 
 /// <summary>
 /// One bet on a coupon: every combination of each size in <see cref="Folds"/> taken from the non-banker legs, with the
 /// bankers added to each. A Trixie on three selections is folds [2, 3]; singles are [1]; an accumulator of n is [n].
-/// <see cref="Stake"/> is <see cref="UnitStake"/> times <see cref="Lines"/>.
+/// <see cref="Stake"/> is <see cref="UnitStake"/> times <see cref="Lines"/>. <see cref="AccaBoostPercent"/> is the share of
+/// the winnings settlement adds when the bet wins, fixed at placement (see <see cref="Promotions.AccaBoost"/>).
 /// </summary>
 public sealed record CouponBetV2(
     Guid BetId,
@@ -24,7 +29,8 @@ public sealed record CouponBetV2(
     int Lines,
     Money.Money UnitStake,
     Money.Money Stake,
-    Money.Money PotentialPayout);
+    Money.Money PotentialPayout,
+    decimal AccaBoostPercent = 0m);
 
 /// <summary>A placed coupon with one or more bets over its legs.</summary>
 public sealed record CouponPlacedV2(

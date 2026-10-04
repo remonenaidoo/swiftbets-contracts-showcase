@@ -445,7 +445,7 @@ export interface CouponPlacedV2 {
     placedAt: string;
 }
 
-/** A leg of a V2 coupon. A banker is in every line of every bet on the coupon. */
+/** A leg of a V2 coupon. A banker is in every line of every bet on the coupon. A bet builder leg has market id MarketId, its components in Builder, and settles as one leg. */
 export interface CouponLegV2 {
     legId: string;
     fixtureId: string;
@@ -454,9 +454,24 @@ export interface CouponLegV2 {
     odds: number;
     offerVersion: number;
     isBanker: boolean;
+    builder: BetBuilderLegV1 | null;
 }
 
-/** One bet on a coupon: every combination of each size in Folds taken from the non-banker legs, with the bankers added to each. A Trixie on three selections is folds [2, 3]; singles are [1]; an accumulator of n is [n]. Stake is UnitStake times Lines. */
+/** The pricing inputs a bet builder leg was accepted on: its components, the correlation factor of every pair (keyed by PairKey) and the margin. Settlement reprices from these when a component is void. */
+export interface BetBuilderLegV1 {
+    components: BuilderComponentV1[];
+    pairFactors: { [key: string]: number; };
+    marginPercent: number;
+}
+
+/** One selection inside a bet builder, at the price it had on its own when the builder was priced. */
+export interface BuilderComponentV1 {
+    marketId: string;
+    selectionId: string;
+    odds: number;
+}
+
+/** One bet on a coupon: every combination of each size in Folds taken from the non-banker legs, with the bankers added to each. A Trixie on three selections is folds [2, 3]; singles are [1]; an accumulator of n is [n]. Stake is UnitStake times Lines. AccaBoostPercent is the share of the winnings settlement adds when the bet wins, fixed at placement (see AccaBoost). */
 export interface CouponBetV2 {
     betId: string;
     name: string;
@@ -465,6 +480,7 @@ export interface CouponBetV2 {
     unitStake: Money;
     stake: Money;
     potentialPayout: Money;
+    accaBoostPercent: number;
 }
 
 /** A V2 coupon's settlement at SettlementVersion. The coupon is Won when it returns more than nothing but not only stakes back, Void when every line is void, otherwise Lost. Payout moves the difference between TargetPayout and what it has already paid. */
@@ -479,7 +495,7 @@ export interface CouponSettledV2 {
     settledAt: string;
 }
 
-/** One bet's settlement: how its lines fell and what it returns. */
+/** One bet's settlement: how its lines fell and what it returns. Return includes BoostBonus. */
 export interface BetSettlementV2 {
     betId: string;
     outcome: CouponOutcome;
@@ -487,6 +503,7 @@ export interface BetSettlementV2 {
     voidLines: number;
     losingLines: number;
     return: Money;
+    boostBonus: Money | null;
 }
 
 /** One operational setting, keyed by Key on a compacted topic: the latest record is the value in force. Version only increases per key, so a consumer drops anything older than what it holds. Value is text; see ConfigKeys for the keys services read and how each is parsed. */

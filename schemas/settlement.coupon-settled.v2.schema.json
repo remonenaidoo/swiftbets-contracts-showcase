@@ -84,7 +84,7 @@
     },
     "BetSettlementV2": {
       "type": "object",
-      "description": "One bet's settlement: how its lines fell and what it returns.",
+      "description": "One bet's settlement: how its lines fell and what it returns. Return includes BoostBonus.",
       "additionalProperties": false,
       "required": [
         "betId",
@@ -116,6 +116,16 @@
         },
         "return": {
           "$ref": "#/definitions/Money"
+        },
+        "boostBonus": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/Money"
+            }
+          ]
         }
       }
     }

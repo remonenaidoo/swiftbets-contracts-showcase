@@ -2,14 +2,15 @@ using SwiftBets.Contracts.Messaging;
 
 namespace SwiftBets.Contracts.Settlement;
 
-/// <summary>One bet's settlement: how its lines fell and what it returns.</summary>
+/// <summary>One bet's settlement: how its lines fell and what it returns. <see cref="Return"/> includes <see cref="BoostBonus"/>.</summary>
 public sealed record BetSettlementV2(
     Guid BetId,
     CouponOutcome Outcome,
     int WinningLines,
     int VoidLines,
     int LosingLines,
-    Money.Money Return);
+    Money.Money Return,
+    Money.Money? BoostBonus = null);
 
 /// <summary>
 /// A V2 coupon's settlement at <see cref="SettlementVersion"/>. The coupon is Won when it returns more than nothing
