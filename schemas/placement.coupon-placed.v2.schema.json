@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "title": "CouponPlacedV2",
   "type": "object",
-  "description": "A placed coupon with one or more bets over its legs.",
+  "description": "A placed coupon with one or more bets over its legs. PromoStake is the part of TotalStake\nthe wallet took from bonus money or a free bet rather than the customer's cash (2.14.0); null on older events, and\nnull or zero means the whole stake was cash.",
   "additionalProperties": false,
   "required": [
     "couponId",
@@ -43,6 +43,16 @@
     "placedAt": {
       "type": "string",
       "format": "date-time"
+    },
+    "promoStake": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/definitions/Money"
+        }
+      ]
     }
   },
   "definitions": {

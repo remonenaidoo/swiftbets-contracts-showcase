@@ -22,6 +22,9 @@ service Wallet {
   // The customer's account in a currency, opened empty if it does not exist yet.
   rpc OpenAccount (OpenAccountRequest) returns (BalanceReply);
   rpc ListAccounts (ListAccountsRequest) returns (AccountsReply);
+  // Gives bonus money from the promotions account with its wagering terms; refused with INVALID_STATE while the
+  // customer already has an active bonus. Keyed like every other posting.
+  rpc GrantBonus (GrantBonusRequest) returns (PostingReply);
 }
 
 message Money {
@@ -150,4 +153,20 @@ message ListAccountsRequest {
 
 message AccountsReply {
   repeated Balance accounts = 1;
+}
+
+message GrantBonusRequest {
+  string idempotency_key = 1;
+  string account_id = 2;
+  Money amount = 3;
+  string reference = 4;
+  // Stake this many times the bonus before it turns into cash (0 converts at once).
+  int32 wagering_multiplier = 5;
+  // Bonus money only pays for, and only counts stakes at, this price or higher (150 = 1.50).
+  int32 min_odds_hundredths = 6;
+  // How much of a sports or casino stake counts toward wagering, 0 to 100.
+  int32 sports_percent = 7;
+  int32 casino_percent = 8;
+  // Days until an unconverted bonus is forfeited, 1 to 90.
+  int32 valid_days = 9;
 }

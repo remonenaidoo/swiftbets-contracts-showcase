@@ -473,7 +473,7 @@ export interface PaymentDriftDetectedV1 {
     detectedAt: string;
 }
 
-/** A placed coupon with one or more bets over its legs. */
+/** A placed coupon with one or more bets over its legs. PromoStake is the part of TotalStake the wallet took from bonus money or a free bet rather than the customer's cash (2.14.0); null on older events, and null or zero means the whole stake was cash. */
 export interface CouponPlacedV2 {
     couponId: string;
     punterId: string;
@@ -482,6 +482,7 @@ export interface CouponPlacedV2 {
     legs: CouponLegV2[];
     bets: CouponBetV2[];
     placedAt: string;
+    promoStake: Money | null;
 }
 
 /** A leg of a V2 coupon. A banker is in every line of every bet on the coupon. A bet builder leg has market id MarketId, its components in Builder, and settles as one leg. The display names (FixtureName "Home v Away", Competition, MarketType as the offer's camelCase market type, SelectionName) are copied from the offer at placement so bet history can show a leg after its fixture leaves the offer. They are optional: events placed before 2.13.0 carry none. */

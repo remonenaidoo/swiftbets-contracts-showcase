@@ -78,6 +78,24 @@ public sealed class BetModelV2Tests
     }
 
     [Fact]
+    public void A_coupon_placed_with_bonus_money_carries_its_promo_stake()
+    {
+        var placed = new CouponPlacedV2(Guid.NewGuid(), Guid.NewGuid(), new Money.Money(1_000, "ZAR"), new Money.Money(2_000, "ZAR"), [], [], DateTimeOffset.UnixEpoch, new Money.Money(400, "ZAR"));
+
+        var back = JsonSerializer.Deserialize<CouponPlacedV2>(JsonSerializer.Serialize(placed, ContractJson.Options), ContractJson.Options)!;
+
+        back.PromoStake.ShouldBe(new Money.Money(400, "ZAR"));
+    }
+
+    [Fact]
+    public void A_coupon_placed_before_promo_stakes_existed_reads_as_all_cash()
+    {
+        const string old = """{"couponId":"0199a000-0000-7000-8000-000000000001","punterId":"0199a000-0000-7000-8000-000000000002","totalStake":{"minorUnits":1000,"currency":"ZAR"},"potentialPayout":{"minorUnits":2000,"currency":"ZAR"},"legs":[],"bets":[],"placedAt":"2026-10-01T10:00:00+00:00"}""";
+
+        JsonSerializer.Deserialize<CouponPlacedV2>(old, ContractJson.Options)!.PromoStake.ShouldBeNull();
+    }
+
+    [Fact]
     public void A_leg_placed_before_names_existed_still_reads_with_null_names()
     {
         const string old = """{"legId":"0199a000-0000-7000-8000-000000000001","fixtureId":"fx-1","marketId":"fx-1-1x2","selectionId":"home","odds":2.0,"offerVersion":3,"isBanker":false}""";

@@ -39,7 +39,11 @@ public sealed record CouponBetV2(
     Money.Money PotentialPayout,
     decimal AccaBoostPercent = 0m);
 
-/// <summary>A placed coupon with one or more bets over its legs.</summary>
+/// <summary>
+/// A placed coupon with one or more bets over its legs. <see cref="PromoStake"/> is the part of <see cref="TotalStake"/>
+/// the wallet took from bonus money or a free bet rather than the customer's cash (2.14.0); null on older events, and
+/// null or zero means the whole stake was cash.
+/// </summary>
 public sealed record CouponPlacedV2(
     Guid CouponId,
     Guid PunterId,
@@ -47,7 +51,8 @@ public sealed record CouponPlacedV2(
     Money.Money PotentialPayout,
     IReadOnlyList<CouponLegV2> Legs,
     IReadOnlyList<CouponBetV2> Bets,
-    DateTimeOffset PlacedAt) : IEventContract
+    DateTimeOffset PlacedAt,
+    Money.Money? PromoStake = null) : IEventContract
 {
     public static string EventType => "placement.coupon-placed";
 
