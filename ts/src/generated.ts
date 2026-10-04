@@ -7,10 +7,18 @@ export interface ResultPublishedV1 {
     homeGoals: number;
     awayGoals: number;
     publishedAt: string;
+    detail: ResultDetailV1 | null;
 }
 
 /** Ordered by precedence: a higher value outranks a lower one at the same result version. */
 export type ResultStatus = "provisional" | "official" | "correction" | "void";
+
+/** What a score alone cannot settle: tennis games (the score fields carry sets) and the winning selection ids of player and outright markets, such as the top batter or the competition winner. */
+export interface ResultDetailV1 {
+    homeGames: number | null;
+    awayGames: number | null;
+    winners: string[] | null;
+}
 
 export interface CouponRejectedV1 {
     couponId: string;
@@ -30,18 +38,22 @@ export interface FixtureChangedV1 {
     offerVersion: number;
     markets: MarketV1[];
     changedAt: string;
+    sport: string;
 }
 
 export type FixtureStatus = "scheduled" | "inPlay" | "finished" | "postponed";
 
+/** A market and its prices; Line is the handicap or total for line markets, shown beside the market name. */
 export interface MarketV1 {
     marketId: string;
     type: MarketType;
     status: MarketStatus;
     selections: SelectionV1[];
+    line: number | null;
 }
 
-export type MarketType = "matchResult" | "totalGoalsOverUnder25";
+/** What a market prices; MarketIds maps each to the market id suffix settlement reads it from. */
+export type MarketType = "matchResult" | "totalGoalsOverUnder25" | "matchWinner" | "setHandicap" | "totalGames" | "handicap" | "totalPoints" | "topBatter" | "competitionWinner";
 
 export type MarketStatus = "open" | "suspended" | "closed";
 

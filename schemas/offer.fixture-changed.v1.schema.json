@@ -13,7 +13,8 @@
     "status",
     "offerVersion",
     "markets",
-    "changedAt"
+    "changedAt",
+    "sport"
   ],
   "properties": {
     "fixtureId": {
@@ -48,6 +49,9 @@
     "changedAt": {
       "type": "string",
       "format": "date-time"
+    },
+    "sport": {
+      "type": "string"
     }
   },
   "definitions": {
@@ -69,6 +73,7 @@
     },
     "MarketV1": {
       "type": "object",
+      "description": "A market and its prices; Line is the handicap or total for line markets, shown beside the market name.",
       "additionalProperties": false,
       "required": [
         "marketId",
@@ -91,19 +96,40 @@
           "items": {
             "$ref": "#/definitions/SelectionV1"
           }
+        },
+        "line": {
+          "type": [
+            "null",
+            "number"
+          ],
+          "format": "decimal"
         }
       }
     },
     "MarketType": {
       "type": "string",
-      "description": "",
+      "description": "What a market prices; MarketIds maps each to the market id suffix settlement reads it from.",
       "x-enumNames": [
         "MatchResult",
-        "TotalGoalsOverUnder25"
+        "TotalGoalsOverUnder25",
+        "MatchWinner",
+        "SetHandicap",
+        "TotalGames",
+        "Handicap",
+        "TotalPoints",
+        "TopBatter",
+        "CompetitionWinner"
       ],
       "enum": [
         "matchResult",
-        "totalGoalsOverUnder25"
+        "totalGoalsOverUnder25",
+        "matchWinner",
+        "setHandicap",
+        "totalGames",
+        "handicap",
+        "totalPoints",
+        "topBatter",
+        "competitionWinner"
       ]
     },
     "MarketStatus": {

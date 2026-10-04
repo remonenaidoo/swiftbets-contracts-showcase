@@ -12,7 +12,8 @@ public sealed record FixtureChangedV1(
     FixtureStatus Status,
     long OfferVersion,
     IReadOnlyList<MarketV1> Markets,
-    DateTimeOffset ChangedAt) : IEventContract
+    DateTimeOffset ChangedAt,
+    string Sport = Sports.Soccer) : IEventContract
 {
     public static string EventType => "offer.fixture-changed";
 

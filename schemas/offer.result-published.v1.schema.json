@@ -2,6 +2,7 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "title": "ResultPublishedV1",
   "type": "object",
+  "description": "A result; the score is goals, points, runs or (tennis) sets by sport, with Detail for the rest.",
   "additionalProperties": false,
   "required": [
     "fixtureId",
@@ -33,6 +34,16 @@
     "publishedAt": {
       "type": "string",
       "format": "date-time"
+    },
+    "detail": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/definitions/ResultDetailV1"
+        }
+      ]
     }
   },
   "definitions": {
@@ -51,6 +62,36 @@
         "correction",
         "void"
       ]
+    },
+    "ResultDetailV1": {
+      "type": "object",
+      "description": "What a score alone cannot settle: tennis games (the score fields carry sets) and the winning selection ids of\nplayer and outright markets, such as the top batter or the competition winner.",
+      "additionalProperties": false,
+      "properties": {
+        "homeGames": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "int32"
+        },
+        "awayGames": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "int32"
+        },
+        "winners": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          }
+        }
+      }
     }
   }
 }
