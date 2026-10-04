@@ -499,6 +499,14 @@ export interface ConfigEntryV1 {
     changedAt: string;
 }
 
+/** Site content changed: Kind is "home" (banners or quick links) or "page", with the page slug. It carries no content; realtime tells every open client, which refetches the public content API. */
+export interface ContentChangedV1 {
+    kind: string;
+    slug: string | null;
+    changedBy: string;
+    changedAt: string;
+}
+
 /** A trader's result, keyed by ManualResultId so a retry is idempotent. MarketId is set for Market scope, CouponId for Coupon scope; WinningSelectionId for Settle and Override; VoidFrom for TimeVoid. */
 export interface ManualResultV1 {
     manualResultId: string;

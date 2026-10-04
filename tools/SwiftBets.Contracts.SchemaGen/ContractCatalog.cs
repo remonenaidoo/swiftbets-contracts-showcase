@@ -57,6 +57,7 @@ public static class ContractCatalog
         ($"{CouponPlacedV2.EventType}.v{CouponPlacedV2.EventVersion}", typeof(CouponPlacedV2)),
         ($"{CouponSettledV2.EventType}.v{CouponSettledV2.EventVersion}", typeof(CouponSettledV2)),
         ($"{ConfigEntryV1.EventType}.v{ConfigEntryV1.EventVersion}", typeof(ConfigEntryV1)),
+        ($"{ContentChangedV1.EventType}.v{ContentChangedV1.EventVersion}", typeof(ContentChangedV1)),
         ($"{ManualResultV1.EventType}.v{ManualResultV1.EventVersion}", typeof(ManualResultV1)),
         ($"{ManualResultRejectedV1.EventType}.v{ManualResultRejectedV1.EventVersion}", typeof(ManualResultRejectedV1)),
         ($"{MarketStatusChangedV1.EventType}.v{MarketStatusChangedV1.EventVersion}", typeof(MarketStatusChangedV1)),

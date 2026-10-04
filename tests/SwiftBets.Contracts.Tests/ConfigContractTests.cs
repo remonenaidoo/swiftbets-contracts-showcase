@@ -16,6 +16,23 @@ public sealed class ConfigContractTests
         Topics.All.ShouldContain(Topics.ConfigEntries);
     }
 
+    [Fact]
+    public void Content_change_round_trips()
+    {
+        var changed = new ContentChangedV1("page", "faq", "ops-1", new DateTimeOffset(2026, 10, 4, 9, 0, 0, TimeSpan.Zero));
+
+        JsonSerializer.Deserialize<ContentChangedV1>(JsonSerializer.Serialize(changed, ContractJson.Options), ContractJson.Options).ShouldBe(changed);
+        Topics.All.ShouldContain(Topics.ContentChanged);
+    }
+
+    [Fact]
+    public void A_content_change_without_its_kind_is_rejected()
+    {
+        const string json = """{"slug":"faq","changedBy":"ops-1","changedAt":"2026-10-04T09:00:00Z"}""";
+
+        Should.Throw<JsonException>(() => JsonSerializer.Deserialize<ContentChangedV1>(json, ContractJson.Options));
+    }
+
     [Theory]
     [InlineData("placement.kill-switch", "on", true)]
     [InlineData("placement.kill-switch", "yes", false)]

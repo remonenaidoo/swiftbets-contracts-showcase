@@ -52,6 +52,9 @@ public static class Topics
 
     /// <summary>Compacted, keyed by setting key: the latest record per key is the value in force.</summary>
     public const string ConfigEntries = "config.entries.v1";
+
+    /// <summary>Keyed by content kind: a banner, quick link or page changed, so clients refetch.</summary>
+    public const string ContentChanged = "config.content-changed.v1";
     public const string ManualResult = "trading.manual-result.v1";
     public const string ManualResultRejected = "trading.manual-result-rejected.v1";
     public const string MarketStatusChanged = "trading.market-status-changed.v1";
@@ -64,6 +67,6 @@ public static class Topics
         RemediationExecuted, LiabilityChanged, RiskAlert, UserRegistered, EmailVerified, AccountStatusChanged,
         SessionRevoked, AuditRecorded, NotificationRequested, LimitChanged, RestrictionsChanged, SelfExclusionStarted,
         KycStatusChanged, DepositSucceeded, DepositFailed, WithdrawalRequested, WithdrawalDecided, WithdrawalPaid,
-        WithdrawalFailed, PaymentDriftDetected, ConfigEntries, CouponPlacedV2, CouponSettledV2, ManualResult, ManualResultRejected, MarketStatusChanged, CasinoTransaction, ProviderReconciliation, ExposureLimits, LimitReached, InboxMessage,
+        WithdrawalFailed, PaymentDriftDetected, ConfigEntries, CouponPlacedV2, CouponSettledV2, ManualResult, ManualResultRejected, MarketStatusChanged, CasinoTransaction, ProviderReconciliation, ExposureLimits, LimitReached, InboxMessage, ContentChanged,
     ];
 }

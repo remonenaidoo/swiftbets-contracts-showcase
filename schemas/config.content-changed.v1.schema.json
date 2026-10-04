@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "ContentChangedV1",
+  "type": "object",
+  "description": "Site content changed: Kind is \"home\" (banners or quick links) or \"page\", with the page slug. It carries\nno content; realtime tells every open client, which refetches the public content API.",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "changedBy",
+    "changedAt"
+  ],
+  "properties": {
+    "kind": {
+      "type": "string"
+    },
+    "slug": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "changedBy": {
+      "type": "string"
+    },
+    "changedAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}
