@@ -118,7 +118,13 @@
         "Handicap",
         "TotalPoints",
         "TopBatter",
-        "CompetitionWinner"
+        "CompetitionWinner",
+        "BothTeamsToScore",
+        "DoubleChance",
+        "DrawNoBet",
+        "TotalGoalsOverUnder15",
+        "TotalGoalsOverUnder35",
+        "CorrectScore"
       ],
       "enum": [
         "matchResult",
@@ -129,7 +135,13 @@
         "handicap",
         "totalPoints",
         "topBatter",
-        "competitionWinner"
+        "competitionWinner",
+        "bothTeamsToScore",
+        "doubleChance",
+        "drawNoBet",
+        "totalGoalsOverUnder15",
+        "totalGoalsOverUnder35",
+        "correctScore"
       ]
     },
     "MarketStatus": {

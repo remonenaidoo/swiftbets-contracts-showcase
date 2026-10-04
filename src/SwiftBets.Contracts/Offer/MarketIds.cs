@@ -17,6 +17,12 @@ public static class MarketIds
         [MarketType.TotalPoints] = "pts",
         [MarketType.TopBatter] = "topbat",
         [MarketType.CompetitionWinner] = "winner",
+        [MarketType.BothTeamsToScore] = "btts",
+        [MarketType.DoubleChance] = "dc",
+        [MarketType.DrawNoBet] = "dnb",
+        [MarketType.TotalGoalsOverUnder15] = "ou15",
+        [MarketType.TotalGoalsOverUnder35] = "ou35",
+        [MarketType.CorrectScore] = "cs",
     };
 
     public static string Suffix(MarketType type) => Suffixes[type];

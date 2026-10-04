@@ -53,7 +53,7 @@ export interface MarketV1 {
 }
 
 /** What a market prices; MarketIds maps each to the market id suffix settlement reads it from. */
-export type MarketType = "matchResult" | "totalGoalsOverUnder25" | "matchWinner" | "setHandicap" | "totalGames" | "handicap" | "totalPoints" | "topBatter" | "competitionWinner";
+export type MarketType = "matchResult" | "totalGoalsOverUnder25" | "matchWinner" | "setHandicap" | "totalGames" | "handicap" | "totalPoints" | "topBatter" | "competitionWinner" | "bothTeamsToScore" | "doubleChance" | "drawNoBet" | "totalGoalsOverUnder15" | "totalGoalsOverUnder35" | "correctScore";
 
 export type MarketStatus = "open" | "suspended" | "closed";
 

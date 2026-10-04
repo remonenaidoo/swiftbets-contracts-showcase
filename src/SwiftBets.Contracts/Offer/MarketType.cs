@@ -26,4 +26,22 @@ public enum MarketType
 
     /// <summary>Outright: one selection per team, settled when the competition ends.</summary>
     CompetitionWinner,
+
+    /// <summary>Both teams to score: selections <c>yes</c> and <c>no</c>.</summary>
+    BothTeamsToScore,
+
+    /// <summary>Double chance: <c>homeDraw</c>, <c>homeAway</c>, <c>drawAway</c>.</summary>
+    DoubleChance,
+
+    /// <summary>Draw no bet: <c>home</c> or <c>away</c>; a draw voids it.</summary>
+    DrawNoBet,
+
+    /// <summary>Total goals over or under 1.5; the line sits in the selection id (<c>over:1.5</c>).</summary>
+    TotalGoalsOverUnder15,
+
+    /// <summary>Total goals over or under 3.5; the line sits in the selection id (<c>over:3.5</c>).</summary>
+    TotalGoalsOverUnder35,
+
+    /// <summary>Correct score: every score up to <see cref="SelectionIds.CorrectScoreMax"/> goals a side (<c>score:2-1</c>), and <c>other</c> for any score with a side above it.</summary>
+    CorrectScore,
 }
