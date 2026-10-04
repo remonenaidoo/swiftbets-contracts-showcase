@@ -66,7 +66,7 @@
     },
     "CouponLegV2": {
       "type": "object",
-      "description": "A leg of a V2 coupon. A banker is in every line of every bet on the coupon. A bet builder leg has market id\nMarketId, its components in Builder, and settles as one leg.",
+      "description": "A leg of a V2 coupon. A banker is in every line of every bet on the coupon. A bet builder leg has market id\nMarketId, its components in Builder, and settles as one leg.\nThe display names (FixtureName \"Home v Away\", Competition, MarketType as the\noffer's camelCase market type, SelectionName) are copied from the offer at placement so bet history can\nshow a leg after its fixture leaves the offer. They are optional: events placed before 2.13.0 carry none.",
       "additionalProperties": false,
       "required": [
         "legId",
@@ -110,6 +110,30 @@
             {
               "$ref": "#/definitions/BetBuilderLegV1"
             }
+          ]
+        },
+        "fixtureName": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "competition": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "marketType": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "selectionName": {
+          "type": [
+            "null",
+            "string"
           ]
         }
       }

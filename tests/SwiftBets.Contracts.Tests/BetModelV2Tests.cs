@@ -67,6 +67,29 @@ public sealed class BetModelV2Tests
     }
 
     [Fact]
+    public void Coupon_leg_names_round_trip()
+    {
+        var leg = new CouponLegV2(Guid.NewGuid(), "fx-1", "fx-1-1x2", "home", 2.0m, 3, false,
+            FixtureName: "Chiefs v Pirates", Competition: "Premiership", MarketType: "matchResult", SelectionName: "Chiefs");
+
+        var back = JsonSerializer.Deserialize<CouponLegV2>(JsonSerializer.Serialize(leg, ContractJson.Options), ContractJson.Options)!;
+
+        back.ShouldBe(leg);
+    }
+
+    [Fact]
+    public void A_leg_placed_before_names_existed_still_reads_with_null_names()
+    {
+        const string old = """{"legId":"0199a000-0000-7000-8000-000000000001","fixtureId":"fx-1","marketId":"fx-1-1x2","selectionId":"home","odds":2.0,"offerVersion":3,"isBanker":false}""";
+
+        var leg = JsonSerializer.Deserialize<CouponLegV2>(old, ContractJson.Options)!;
+
+        leg.SelectionId.ShouldBe("home");
+        leg.FixtureName.ShouldBeNull();
+        leg.SelectionName.ShouldBeNull();
+    }
+
+    [Fact]
     public void Envelopes_always_carry_a_context_and_older_ones_read_as_platform()
     {
         var payload = new CouponRejectedV1(Guid.NewGuid(), Guid.NewGuid(), "price_changed", At);

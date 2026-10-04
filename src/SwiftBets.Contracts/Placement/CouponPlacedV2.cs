@@ -5,6 +5,9 @@ namespace SwiftBets.Contracts.Placement;
 /// <summary>
 /// A leg of a V2 coupon. A banker is in every line of every bet on the coupon. A bet builder leg has market id
 /// <see cref="Offer.BetBuilderPricing.MarketId"/>, its components in <see cref="Builder"/>, and settles as one leg.
+/// The display names (<see cref="FixtureName"/> "Home v Away", <see cref="Competition"/>, <see cref="MarketType"/> as the
+/// offer's camelCase market type, <see cref="SelectionName"/>) are copied from the offer at placement so bet history can
+/// show a leg after its fixture leaves the offer. They are optional: events placed before 2.13.0 carry none.
 /// </summary>
 public sealed record CouponLegV2(
     Guid LegId,
@@ -14,7 +17,11 @@ public sealed record CouponLegV2(
     decimal Odds,
     long OfferVersion,
     bool IsBanker,
-    Offer.BetBuilderLegV1? Builder = null);
+    Offer.BetBuilderLegV1? Builder = null,
+    string? FixtureName = null,
+    string? Competition = null,
+    string? MarketType = null,
+    string? SelectionName = null);
 
 /// <summary>
 /// One bet on a coupon: every combination of each size in <see cref="Folds"/> taken from the non-banker legs, with the

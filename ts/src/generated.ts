@@ -484,7 +484,7 @@ export interface CouponPlacedV2 {
     placedAt: string;
 }
 
-/** A leg of a V2 coupon. A banker is in every line of every bet on the coupon. A bet builder leg has market id MarketId, its components in Builder, and settles as one leg. */
+/** A leg of a V2 coupon. A banker is in every line of every bet on the coupon. A bet builder leg has market id MarketId, its components in Builder, and settles as one leg. The display names (FixtureName "Home v Away", Competition, MarketType as the offer's camelCase market type, SelectionName) are copied from the offer at placement so bet history can show a leg after its fixture leaves the offer. They are optional: events placed before 2.13.0 carry none. */
 export interface CouponLegV2 {
     legId: string;
     fixtureId: string;
@@ -494,6 +494,10 @@ export interface CouponLegV2 {
     offerVersion: number;
     isBanker: boolean;
     builder: BetBuilderLegV1 | null;
+    fixtureName: string | null;
+    competition: string | null;
+    marketType: string | null;
+    selectionName: string | null;
 }
 
 /** The pricing inputs a bet builder leg was accepted on: its components, the correlation factor of every pair (keyed by PairKey) and the margin. Settlement reprices from these when a component is void. */
