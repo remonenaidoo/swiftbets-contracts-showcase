@@ -70,6 +70,12 @@ message ReserveRequest {
   string account_id = 2;
   Money amount = 3;
   string reference = 4;
+  // What the stake is on, "sport" or "casino"; bonus money is only used where its offer allows (cash is used first).
+  string product = 5;
+  // The lowest price on the coupon in hundredths (150 = 1.50); bonus money and free bets need their minimum odds.
+  int32 odds_hundredths = 6;
+  // Stake a free bet instead of the customer's money; the amount must equal the free bet's value.
+  string free_bet_id = 7;
 }
 
 message ReservationCommand {
@@ -83,6 +89,9 @@ message Reservation {
   Money amount = 3;
   ReservationState state = 4;
   string reference = 5;
+  // The part of the stake drawn from bonus money; the rest is cash unless free_bet_id is set.
+  Money bonus_amount = 6;
+  string free_bet_id = 7;
 }
 
 message ReservationReply {
