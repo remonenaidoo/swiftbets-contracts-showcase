@@ -23,8 +23,10 @@ jobs:
       packages: write
       security-events: write
 
+  # A release cut from a feature branch drops whatever main merged since it branched (2.11.0 shipped without 2.6.0),
+  # so a manual release runs only on main.
   release:
-    if: startsWith(github.ref, 'refs/tags/v') || inputs.version != ''
+    if: startsWith(github.ref, 'refs/tags/v') || (inputs.version != '' && github.ref == 'refs/heads/main')
     needs: dotnet
     uses: remonenaidoo/swiftbets-platform/.github/workflows/dotnet-release.yml@main
     with:
@@ -59,7 +61,7 @@ jobs:
           path: ts/*.tgz
 
   npm-release:
-    if: startsWith(github.ref, 'refs/tags/v') || inputs.version != ''
+    if: startsWith(github.ref, 'refs/tags/v') || (inputs.version != '' && github.ref == 'refs/heads/main')
     needs: [release, typescript]
     runs-on: ubuntu-latest
     permissions:
