@@ -1,6 +1,6 @@
 # swiftbets-contracts
 
-[![ci](https://github.com/remonenaidoo/swiftbets-contracts/actions/workflows/ci.yml/badge.svg)](https://github.com/remonenaidoo/swiftbets-contracts/actions/workflows/ci.yml)
+[![ci](https://github.com/remonenaidoo/swiftbets-contracts-showcase/actions/workflows/ci.yml/badge.svg)](https://github.com/remonenaidoo/swiftbets-contracts-showcase/actions/workflows/ci.yml)
 
 The shared, versioned contracts of the SwiftBets platform: every event that crosses Kafka, the single API error envelope, the gRPC wallet service, and the TypeScript types the dashboard and mobile app compile against.
 
@@ -27,7 +27,11 @@ dotnet run --project tools/SwiftBets.Contracts.SchemaGen -- .   # regenerate sch
 
 ## Releases
 
-Tagging `vX.Y.Z` publishes the `.nupkg` files and the npm tarball as assets of the GitHub release. Consumers pin the exact version in `Directory.Packages.props` and CI fetches it into a local feed (see `swiftbets-platform/docs/DECISIONS.md`, D34).
+Tagging `vX.Y.Z` publishes the `.nupkg` files and the npm tarball as assets of the GitHub release. Consumers pin the exact version in `Directory.Packages.props` and CI fetches it into a local feed (`scripts/fetch-shared-packages.sh` in each service).
+
+## Part of SwiftBets
+
+SwiftBets is a sportsbook and casino platform built as independent .NET services. It runs live at [swiftbets.remonenaidoo.com](https://swiftbets.remonenaidoo.com). These repositories show a selection of it: [Settlement](https://github.com/remonenaidoo/swiftbets-settlement-showcase) · [Wallet](https://github.com/remonenaidoo/swiftbets-wallet-showcase) · [Originals](https://github.com/remonenaidoo/swiftbets-originals-showcase) · [Steward](https://github.com/remonenaidoo/swiftbets-steward-showcase) · [Building blocks](https://github.com/remonenaidoo/swiftbets-building-blocks-showcase).
 
 ## License
 
